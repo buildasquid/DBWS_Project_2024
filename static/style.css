@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.outfit-fontclass {
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  
+}
+
+body {
+  font-family: Outfit, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color:black;
+  color: #e7ecef;
+  position: relative; 
+
+}
+
+
+.navbar-container {
+  background-color: #230c0f;
+  width: 100%; 
+}
+
+.navbar {
+  max-width: 1440px; 
+  margin: 0 auto; 
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.logo_pic img{
+  max-height: 100px; 
+  width: auto; 
+}
+
+.logo_pic{
+  margin: 0; 
+}
+
+.navbar-nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav-item {
+  margin-left: 15px; 
+}
+
+
+.nav-link {
+  font-size: 24px;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.container_description {
+  max-width: 1440px; 
+  margin: 0 auto; 
+  padding: 10px;
+  text-align: center;
+  flex: 1;
+  margin-top: 160px;
+  padding-bottom: 40px; 
+}
+
+.container_description p:first-of-type{
+  margin-bottom:15px;
+}
+
+
+.hero_buttons {
+  border-style: solid; 
+  border-width: 1px; 
+  border-color: #e7ecef; 
+  border-radius: 15px; 
+  padding: 10px 20px; 
+  color: #e7ecef; 
+  background-color: transparent; 
+  text-decoration: none; 
+  font-size: 18px; 
+  transition: all 0.3s ease; 
+  cursor: pointer; 
+}
+
+.hero_buttons:hover {
+  border-width: 1.5px; 
+  border-radius: 20px; 
+  padding: 12px 22px; 
+  background-color: #e7ecef; 
+  color: black; 
+}
+
+.container_browse_catalogue{
+    max-width: 500px; 
+    margin: 70px; 
+    padding: 20px;
+    text-align: left; 
+    flex: 1;
+    padding-bottom: 40px; 
+} 
+
+.container_become_member{
+  max-width: 500px; 
+  margin: 70px;
+  padding: 20px;
+  text-align: right; 
+  flex: 1;
+  padding-bottom: 40px; 
+}
+
+.imprint_container{
+    margin-bottom: 50px;
+    margin-left: 150px;
+    margin-right:150px;
+}
+
+.small_red_text{
+    color: #b23a48;
+    font-size:20px;
+}
+
+.flex-container{
+  display: flex;               
+  justify-content: space-between; 
+  align-items: center;         
+  max-width: 1400px;          
+  margin: 0 auto;             
+  padding: 20px;             
+  }
+
+.vinyl_pic img {
+    width: 100%;     
+    height: auto;    
+    max-width: 600px; 
+}
+
+.vinyl_pic{
+
+  margin: 70px;
+}
+
+.flex-container_memb{
+  display: flex;               
+  justify-content: space-between; 
+  align-items: center;         
+  max-width: 1400px;          
+  margin: 0 auto;             
+  padding: 20px;               
+  }
+
+  .prices_pic img {
+    width: 100%;     
+    height: auto;    
+    max-width: 600px; 
+}
+
+  .prices_pic{
+    margin: 70px;
+  }
+
+  .paragraph_hero{  
+    font-size:20px;
+
+  }

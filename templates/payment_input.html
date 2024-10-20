@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Record Payment</title>
+</head>
+<body>
+
+    <h1>Record Payment</h1>
+    <form id="paymentForm" method="POST">
+        <label for="customer">Select Customer:</label>
+        <select id="customer" name="customer" required>
+            {% for customer in customers %}
+                <option value="{{ customer[0] }}">{{ customer[1] }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="paymentFor">Payment For:</label>
+        <select id="paymentFor" name="paymentFor" onchange="toggleVinylSelection()" required>
+            <option value="Membership Fee">Membership Fee</option>
+            <option value="Vinyl Purchase">Vinyl Purchase</option>
+            <option value="Other">Other</option>
+        </select>
+        <br>
+
+        <div id="vinylSection" style="display: none;">
+            <label for="vinyl">Select Vinyl:</label>
+            <select id="vinyl" name="vinyl">
+                {% for vinyl in vinyls %}
+                    <option value="{{ vinyl[0] }}">{{ vinyl[1] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+
+            <label for="discount">Select Discount:</label>
+            <select id="discount" name="discount">
+                {% for discount in discounts %}
+                    <option value="{{ discount[0] }}">{{ discount[1] }}% - {{ discount[2] }}</option>
+                {% endfor %}
+            </select>
+            <br>
+        </div>
+
+        
+        <input type="hidden" name="amount" id="amount" value="{{ final_amount }}"> 
+
+        <button type="submit">Record Payment</button>
+    </form>
+
+    <script>
+        function toggleVinylSelection() {
+            const paymentFor = document.getElementById('paymentFor').value;
+            const vinylSection = document.getElementById('vinylSection');
+            vinylSection.style.display = (paymentFor === 'Vinyl Purchase') ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+</html>

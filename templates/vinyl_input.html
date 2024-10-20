@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Add Vinyl Record</title>
+</head>
+<body>
+
+    <h1>Add Vinyl Record</h1>
+    <form id="vinylForm" method="POST">
+        <label for="vinylTitle">Title:</label>
+        <input type="text" id="vinylTitle" name="vinylTitle" required>
+        <br>
+        <label for="vinylArtist">Artist:</label>
+        <input type="text" id="vinylArtist" name="vinylArtist" required>
+        <br>
+        <label for="releaseDate">Release Date:</label>
+        <input type="date" id="releaseDate" name="releaseDate" required>
+        <br>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required>
+        <br>
+        <label for="vinylType">Type:</label>
+        <select id="vinylType" name="vinylType">
+            <option value="LP">LP</option>
+            <option value="EP">EP</option>
+            <option value="Single">Single</option>
+        </select>
+        <br>
+        
+        <div id="vinylDetails" style="display: none;">
+            <label for="numberOfTracks">Number of Tracks:</label>
+            <input type="number" id="numberOfTracks" name="numberOfTracks" required>
+            <br>
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" step="0.01" id="duration" name="duration" required>
+            <br>
+        </div>
+        
+        <label for="vinylPrice">Price:</label>
+        <input type="number" id="vinylPrice" name="vinylPrice" required>
+        <br>
+        
+        <button type="submit">Add Vinyl Record</button>
+    </form>
+
+    <script>
+        document.getElementById('vinylType').addEventListener('change', function() {
+            const type = this.value;
+            const details = document.getElementById('vinylDetails');
+            details.style.display = type === 'LP' || type === 'EP' || type === 'Single' ? 'block' : 'none';
+        });
+    </script>
+
+</body>
+</html>
