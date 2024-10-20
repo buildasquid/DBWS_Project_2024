@@ -7,7 +7,7 @@ app.secret_key = 'your_secret_key'
 
 def get_db_connection():
     return mysql.connector.connect(
-        host='localhost',  
+        host='0.0.0.0',  
         user='sdaria', 
         password='SHCfcZ',  
         database='sdaria_db'  
