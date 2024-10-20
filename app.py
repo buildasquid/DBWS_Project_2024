@@ -7,7 +7,7 @@ app.secret_key = 'your_secret_key'
 
 def get_db_connection():
     return mysql.connector.connect(
-        host='0.0.0.0',  
+        host='localhost',  
         user='sdaria', 
         password='SHCfcZ',  
         database='sdaria_db'  
@@ -224,5 +224,6 @@ def payment_feedback():
     return render_template('payment_feedback.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
 
