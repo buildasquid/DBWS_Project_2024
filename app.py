@@ -209,6 +209,29 @@ def payment_input():
 
     return render_template('payment_input.html', customers=customers, vinyls=vinyls, discounts=discounts)
 
+@app.route('/catalogue')
+@app.route('/catalogue/<int:page>')
+def catalogue(page=1):
+    vinyls_per_page = 5  # You can change this number to fit your design
+    offset = (page - 1) * vinyls_per_page
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Retrieve all vinyls with limit and offset for pagination
+    cursor.execute("SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl LIMIT %s OFFSET %s", (vinyls_per_page, offset))
+    vinyls = cursor.fetchall()
+
+    # Count total number of vinyls for pagination
+    cursor.execute("SELECT COUNT(*) FROM Vinyl")
+    total_vinyls = cursor.fetchone()[0]
+    total_pages = (total_vinyls // vinyls_per_page) + (1 if total_vinyls % vinyls_per_page > 0 else 0)
+
+    cursor.close()
+    conn.close()
+
+    return render_template('catalogue.html', vinyls=vinyls, page=page, total_pages=total_pages)
+
 
 
 @app.route('/customer_feedback')
