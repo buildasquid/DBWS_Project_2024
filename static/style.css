@@ -173,3 +173,143 @@ body {
     font-size:20px;
 
   }
+
+
+  .vinyl-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.vinyl-table th, .vinyl-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.vinyl-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.catalogue-container {
+  padding: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.vinyl-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.vinyl-item {
+  background-color: #000000;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  padding: 20px;
+  margin: 15px;
+  width: 30%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.pagination {
+  margin-top: 30px;
+}
+
+.pagination a {
+  margin: 0 5px;
+  text-decoration: none;
+  color: #333;
+}
+
+.pagination a.active {
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.vinyl-item h2 a {
+  color: #ff5e00;
+  text-decoration: none; 
+  transition: color 0.3s; 
+}
+
+.vinyl-item h2 a:hover {
+  color: #980000; 
+  text-decoration: underline; 
+}
+
+
+.vinyl-detail {
+  margin: 20px auto; 
+  padding: 20px;
+  border: 1px solid #ddd; 
+  border-radius: 25px; 
+  background-color: #000000; 
+  max-width: 600px; 
+  text-align: center; 
+}
+
+.vinyl-detail h2 {
+  color: #ffffff;
+  font-size: 24px; 
+}
+
+.vinyl-detail p {
+  color: #ffffff; 
+  font-size: 18px;
+  margin: 10px 0; 
+}
+
+.vinyl-detail a {
+  display: inline-block; 
+  margin-top: 20px; 
+  color: #ff6200; 
+  text-decoration: none; 
+  transition: color 0.3s; 
+}
+
+.vinyl-detail a:hover {
+  color: #b30000; 
+  text-decoration: underline; 
+}
+
+
+.search-form {
+  display: flex;
+  align-items: center;
+  margin: 20px 0; 
+}
+
+.search-input {
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  margin-right: 10px; 
+  font-size: 16px;
+  flex: 1; 
+}
+
+.search-select {
+  padding: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  margin-right: 10px; 
+  font-size: 16px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  background-color: #ff5100; 
+  color: white; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s; 
+}
+
+.search-button:hover {
+  background-color: #a40000; 
+}
