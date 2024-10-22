@@ -222,11 +222,11 @@ def catalogue(page=1):
     genre_filter = request.args.get('genre', '')
     artist_filter = request.args.get('artist', '')
 
-    # Query to retrieve all genres for the dropdown
+    # query to retrieve all genres for the dropdown
     cursor.execute("SELECT DISTINCT Genre FROM Vinyl")
     genres = [row[0] for row in cursor.fetchall()]
 
-    # Construct SQL query based on filters
+    # build SQL query based on filters
     sql_query = "SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl WHERE 1=1"
     query_params = []
 
@@ -247,7 +247,7 @@ def catalogue(page=1):
     cursor.execute(sql_query, query_params)
     vinyls = cursor.fetchall()
 
-    # Count total number of vinyls for pagination
+    # count how many vinyls we have in total for pagination
     cursor.execute("SELECT COUNT(*) FROM Vinyl WHERE 1=1")
     total_vinyls = cursor.fetchone()[0]
     total_pages = (total_vinyls // vinyls_per_page) + (1 if total_vinyls % vinyls_per_page > 0 else 0)
@@ -265,15 +265,14 @@ def vinyl_detail(vinyl_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Fetch the specific vinyl details from the database
+    #get vinyl details again from db
     cursor.execute("SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl WHERE VinylID = %s", (vinyl_id,))
     vinyl = cursor.fetchone()
     
     cursor.close()
     conn.close()
 
-    # Check what vinyl[4] contains
-    print(f"Vinyl Price: {vinyl[4]}")  # Debugging line to check the price
+    print(f"Vinyl Price: {vinyl[4]}") 
 
     return render_template('vinyl_detail.html', vinyl=vinyl)
 
