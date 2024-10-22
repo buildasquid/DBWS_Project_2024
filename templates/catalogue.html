@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- Navbar section -->
+    
     <div class="navbar-container">
         <div class="navbar">
             <div class="logo_pic">
@@ -34,11 +34,11 @@
         </div>
     </div>
 
-    <!-- Main Catalogue Content -->
+  
     <div class="catalogue-container">
         <h1>Our Vinyl Catalogue</h1>
 
-    <!-- Search Form -->
+    
 <form method="GET" action="{{ url_for('catalogue') }}" class="search-form">
   <input type="text" name="search" placeholder="Search by vinyl name..." value="{{ search_query }}" class="search-input">
   <select name="genre" class="search-select">
@@ -52,11 +52,11 @@
 </form>
 
 
-        <!-- Vinyl List Section -->
+        
         <div class="vinyl-list">
             {% for vinyl in vinyls %}
             <div class="vinyl-item">
-                <h2><a href="{{ url_for('vinyl_detail', vinyl_id=vinyl[0]) }}">{{ vinyl[1] }}</a></h2> <!-- Vinyl Name -->
+                <h2><a href="{{ url_for('vinyl_detail', vinyl_id=vinyl[0]) }}">{{ vinyl[1] }}</a></h2> 
                 <p>Artist: {{ vinyl[2] }}</p>
                 <p>Genre: {{ vinyl[3] }}</p>
                 <p>Price: ${{ vinyl[4] }}</p>
@@ -67,7 +67,7 @@
             {% endif %}
         </div>
 
-        <!-- Pagination Section -->
+       
         <div class="pagination">
             {% if page > 1 %}
             <a href="{{ url_for('catalogue', page=page-1, search_name=search_query_name, search_genre=search_query_genre, search_artist=search_query_artist) }}">&laquo; Previous</a>
