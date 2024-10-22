@@ -209,28 +209,78 @@ def payment_input():
 
     return render_template('payment_input.html', customers=customers, vinyls=vinyls, discounts=discounts)
 
-@app.route('/catalogue')
-@app.route('/catalogue/<int:page>')
+@app.route('/catalogue', methods=['GET'])
+@app.route('/catalogue/<int:page>', methods=['GET'])
 def catalogue(page=1):
-    vinyls_per_page = 5  # You can change this number to fit your design
+    vinyls_per_page = 5
     offset = (page - 1) * vinyls_per_page
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    # Retrieve all vinyls with limit and offset for pagination
-    cursor.execute("SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl LIMIT %s OFFSET %s", (vinyls_per_page, offset))
+    search_query = request.args.get('search', '')
+    genre_filter = request.args.get('genre', '')
+    artist_filter = request.args.get('artist', '')
+
+    # Query to retrieve all genres for the dropdown
+    cursor.execute("SELECT DISTINCT Genre FROM Vinyl")
+    genres = [row[0] for row in cursor.fetchall()]
+
+    # Construct SQL query based on filters
+    sql_query = "SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl WHERE 1=1"
+    query_params = []
+
+    if search_query:
+        sql_query += " AND Name LIKE %s"
+        query_params.append(f"%{search_query}%")
+    if genre_filter:
+        sql_query += " AND Genre = %s"
+        query_params.append(genre_filter)
+    if artist_filter:
+        sql_query += " AND Artist LIKE %s"
+        query_params.append(f"%{artist_filter}%")
+
+    sql_query += " LIMIT %s OFFSET %s"
+    query_params.append(vinyls_per_page)
+    query_params.append(offset)
+
+    cursor.execute(sql_query, query_params)
     vinyls = cursor.fetchall()
 
     # Count total number of vinyls for pagination
-    cursor.execute("SELECT COUNT(*) FROM Vinyl")
+    cursor.execute("SELECT COUNT(*) FROM Vinyl WHERE 1=1")
     total_vinyls = cursor.fetchone()[0]
     total_pages = (total_vinyls // vinyls_per_page) + (1 if total_vinyls % vinyls_per_page > 0 else 0)
 
     cursor.close()
     conn.close()
 
-    return render_template('catalogue.html', vinyls=vinyls, page=page, total_pages=total_pages)
+    return render_template('catalogue.html', vinyls=vinyls, page=page, total_pages=total_pages, search_query=search_query, genres=genres)
+
+
+
+
+@app.route('/vinyl/<int:vinyl_id>')
+def vinyl_detail(vinyl_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch the specific vinyl details from the database
+    cursor.execute("SELECT VinylID, Name, Artist, Genre, Price FROM Vinyl WHERE VinylID = %s", (vinyl_id,))
+    vinyl = cursor.fetchone()
+    
+    cursor.close()
+    conn.close()
+
+    # Check what vinyl[4] contains
+    print(f"Vinyl Price: {vinyl[4]}")  # Debugging line to check the price
+
+    return render_template('vinyl_detail.html', vinyl=vinyl)
+
+
+
+
+
 
 
 
@@ -247,6 +297,5 @@ def payment_feedback():
     return render_template('payment_feedback.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8017, debug=True)
-
+    app.run(debug=True)
 
