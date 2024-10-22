@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue</title>
+</head>
+<body>
+
+<div class="catalogue-container">
+  <h1>Our Vinyl Catalogue</h1>
+
+  <div class="vinyl-list">
+    {% for vinyl in vinyls %}
+    <div class="vinyl-item">
+      <h2>{{ vinyl[1] }}</h2> <!-- Vinyl Name -->
+      <p>Artist: {{ vinyl[2] }}</p>
+      <p>Genre: {{ vinyl[3] }}</p>
+      <p>Price: ${{ vinyl[4] }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    {% if page > 1 %}
+    <a href="{{ url_for('catalogue', page=page-1) }}">&laquo; Previous</a>
+    {% endif %}
+
+    {% for p in range(1, total_pages+1) %}
+    <a href="{{ url_for('catalogue', page=p) }}" {% if p == page %}class="active"{% endif %}>{{ p }}</a>
+    {% endfor %}
+
+    {% if page < total_pages %}
+    <a href="{{ url_for('catalogue', page=page+1) }}">Next &raquo;</a>
+    {% endif %}
+  </div>
+</div>
+
+</body>
+</html>
