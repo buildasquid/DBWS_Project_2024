@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 import mysql.connector
+
 
 app = Flask(__name__, template_folder='templates')  
 app.secret_key = 'your_secret_key'  
@@ -23,7 +24,40 @@ def imprint():
 
 @app.route('/management')
 def management():
+    if 'username' not in session:
+        flash("Log in to access this page.", "error")
+        return redirect(url_for('login'))
     return render_template('management.html')
+
+def check_user(username, password):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT password FROM Users WHERE username = %s", (username,))
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    if result and result[0] == password:
+        return True
+    return False
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    session.pop('username', None)
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if check_user(username, password):
+            session['username'] = username
+            return redirect(url_for('management'))
+        else:
+            flash("Invalid username or password! Please try again.", "error")
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash("You have been logged out.", "info")
+    return redirect(url_for('index'))
 
 @app.route('/customer_input', methods=['GET', 'POST'])
 def customer_input():
@@ -130,6 +164,7 @@ from decimal import Decimal
 
 @app.route('/payment_input', methods=['GET', 'POST'])
 def payment_input():
+
     if request.method == 'POST':
         customer_id = request.form['customer']
         payment_for = request.form['paymentFor']
@@ -277,12 +312,6 @@ def vinyl_detail(vinyl_id):
     return render_template('vinyl_detail.html', vinyl=vinyl)
 
 
-
-
-
-
-
-
 @app.route('/customer_feedback')
 def customer_feedback():
     return render_template('customer_feedback.html')
@@ -297,4 +326,3 @@ def payment_feedback():
 
 if __name__ == '__main__':
     app.run(debug=True)
-

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Management Login Page</title>
+</head>
+<body>
+<div class="navbar-container">
+    <div class="navbar">
+      <div class="logo_pic">
+        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="Logo pic">
+      </div>
+    </div>
+  </div>
+
+  <div class="container_description">
+    <h1>Maintenance Dashboard</h1>
+    <form method="POST" action="{{ url_for('login') }}">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <br>
+        <button type="submit">Login</button>
+      </form>
+  </div>
+
+<div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+      <li class="{{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  {% endwith %}
+</div>
+  
+</body>

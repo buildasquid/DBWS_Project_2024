@@ -7,12 +7,12 @@
     <title>Add Customer</title>
 </head>
 <body>
-
     <h1>Add Customer</h1>
     <form id="customerForm" action="{{ url_for('customer_input') }}" method="POST">
         <label for="customerFirstName"> Name:</label>
         <input type="text" id="customerName" name="customerName" required>
         <br>
+        
         
         <label for="customerEmail">Email:</label>
         <input type="email" id="customerEmail" name="customerEmail" required>
