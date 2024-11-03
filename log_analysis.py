@@ -2,15 +2,14 @@ import re
 import datetime
 import os
 
-# Define the log file paths (update these paths as necessary)
-ACCESS_LOG = '/var/log/apache2/access.log'  # Path to the Apache access log
-ERROR_LOG = '/var/log/apache2/error.log'    # Path to the Apache error log
+ACCESS_LOG = '/var/log/apache2/access.log' 
+ERROR_LOG = '/var/log/apache2/error.log'    
 
 def parse_access_log(log_file):
     traffic_data = {}
     user_agents = {}
 
-    # Regular expression for parsing access log entries
+   
     access_pattern = re.compile(
         r'(\S+) - - \[(.+?)\] "(\S+) (\S+) \S+" (\d{3}) (\d+) "(.*?)" "(.*?)"'
     )
@@ -23,7 +22,7 @@ def parse_access_log(log_file):
                 date_time = datetime.datetime.strptime(timestamp.split()[0], "%d/%b/%Y:%H:%M:%S")
                 date_time_str = date_time.strftime("%Y-%m-%d %H:%M:%S")
 
-                # Count accesses per page
+               
                 if path not in traffic_data:
                     traffic_data[path] = {}
                 if ip not in traffic_data[path]:
@@ -31,7 +30,7 @@ def parse_access_log(log_file):
                 traffic_data[path][ip]['count'] += 1
                 traffic_data[path][ip]['user_agents'].add(user_agent)
 
-                # Count user agents
+            
                 if user_agent not in user_agents:
                     user_agents[user_agent] = 0
                 user_agents[user_agent] += 1
@@ -41,7 +40,7 @@ def parse_access_log(log_file):
 def parse_error_log(log_file):
     error_data = {}
 
-    # Regular expression for parsing error log entries
+   
     error_pattern = re.compile(r'^\[([^\]]+)\] \[(\S+)\] \s*(.*)$')
 
     with open(log_file, 'r') as f:
