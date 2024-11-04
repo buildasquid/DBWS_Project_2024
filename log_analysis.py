@@ -2,8 +2,8 @@ import re
 import datetime
 import os
 
-ACCESS_LOG = '/var/log/apache/access.log' 
-ERROR_LOG = '/var/log/apache/error.log'    
+ACCESS_LOG = '/var/log/apache/access' 
+ERROR_LOG = '/var/log/apache/error'    
 
 def parse_access_log(log_file):
     traffic_data = {}
