@@ -40,7 +40,7 @@ def parse_access_log(log_file):
 def parse_error_log(log_file):
     error_data = {}
 
-   
+    # Adjusted pattern to handle Apache log format
     error_pattern = re.compile(r'^\[([^\]]+)\] \[(\S+)\] \s*(.*)$')
 
     with open(log_file, 'r') as f:
@@ -48,7 +48,8 @@ def parse_error_log(log_file):
             match = error_pattern.match(line)
             if match:
                 timestamp, error_type, message = match.groups()
-                date_time = datetime.datetime.strptime(timestamp.split()[0], "%Y-%m-%d %H:%M:%S")
+                # Parse datetime with the correct format
+                date_time = datetime.datetime.strptime(timestamp, "%a %b %d %H:%M:%S.%f %Y")
                 date_time_str = date_time.strftime("%Y-%m-%d %H:%M:%S")
 
                 if message not in error_data:
@@ -56,6 +57,7 @@ def parse_error_log(log_file):
                 error_data[message].append((date_time_str, error_type))
 
     return error_data
+
 
 def save_traffic_data(traffic_data):
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
