@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import mysql.connector
-
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder='templates')  
 app.secret_key = 'your_secret_key'  
 
+CORS(app)
 
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',  
-        user='sdaria', 
-        password='SHCfcZ',  
-        database='sdaria_db'  
+        user='timi', 
+        password='IMIT',  
+        database='rtimeea_andreea_db'  
     )
 
 @app.route('/')
@@ -323,6 +324,31 @@ def vinyl_feedback():
 @app.route('/payment_feedback')
 def payment_feedback():
     return render_template('payment_feedback.html')
+
+
+## AUTOCOMPLETE HW9
+@app.route('/autocomplete_vinyl', methods=['GET'])
+def autocomplete():
+    search = request.args.get('term', '')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    #query string + max ten rows shown + tuple of my search
+    cursor.execute("SELECT Name FROM Vinyl WHERE Name LIKE %s LIMIT 10", (f"%{search}%",))
+    results = [row[0] for row in cursor.fetchall()] #interact database + return rows
+    cursor.close()
+    conn.close()
+    return jsonify(results)
+
+@app.route('/autocomplete_artist', methods=['GET'])
+def autocomplete_artist():
+    search = request.args.get('term', '')
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT Artist FROM Vinyl WHERE Artist LIKE %s LIMIT 10", (f"%{search}%",))
+    results = [row[0] for row in cursor.fetchall()]
+    cursor.close()
+    conn.close()
+    return jsonify(results)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8017, debug=True)
