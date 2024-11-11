@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalogue</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 </head>
 <body>
 
@@ -40,14 +42,14 @@
 
     
 <form method="GET" action="{{ url_for('catalogue') }}" class="search-form">
-  <input type="text" name="search" placeholder="Search by vinyl name..." value="{{ search_query }}" class="search-input">
+  <input type="text" id ="autocomplete_vinyl" name="search" placeholder="Search by vinyl name..." value="{{ search_query }}" class="search-input">
   <select name="genre" class="search-select">
       <option value="">Select Genre</option>
       {% for genre in genres %}
           <option value="{{ genre }}">{{ genre }}</option>
       {% endfor %}
   </select>
-  <input type="text" name="artist" placeholder="Search by artist..." class="search-input">
+  <input type="text" id="autocomplete_artist" name="artist" placeholder="Search by artist..." class="search-input">
   <button type="submit" class="search-button">Search</button>
 </form>
 
@@ -82,6 +84,44 @@
             {% endif %}
         </div>
     </div>
+
+
+<script>
+$( "#autocomplete_vinyl" ).autocomplete({
+    source: function( request, response ) {
+    $.ajax({
+        url: "http://127.0.0.1:5000/autocomplete_vinyl",  // Replace with your server URL
+        dataType: "json",
+        data: {
+        term: request.term
+        },
+        success: function( data ) {
+        response( data );
+        }
+    });
+    }
+});
+</script>
+
+<script>
+    $( "#autocomplete_artist" ).autocomplete({
+    source: function( request, response ) {
+        $.ajax({
+        url: " http://127.0.0.1:5000/autocomplete_artist",
+        dataType: "json",
+        data: {
+            term: request.term
+        },
+        success: function( data ) {
+            response( data );
+        }
+        });
+    }
+});
+</script>
+
+
+
 
 </body>
 </html>
