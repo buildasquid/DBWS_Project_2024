@@ -313,3 +313,10 @@ body {
 .search-button:hover {
   background-color: #a40000; 
 }
+
+/*removing defaults for autocomplete*/
+.ui-autocomplete {
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0; 
+}
