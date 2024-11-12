@@ -20,7 +20,7 @@
 $( "#autocomplete_vinyl" ).autocomplete({
   source: function( request, response ) {
     $.ajax({
-      url: "http://0.0.0.0:8017/autocomplete_vinyl",  
+      url: "http://5.75.182.107:8017/autocomplete_vinyl",  
       dataType: "json",
       data: {
         term: request.term
@@ -37,7 +37,7 @@ $( "#autocomplete_vinyl" ).autocomplete({
   $( "#autocomplete_artist" ).autocomplete({
     source: function( request, response ) {
       $.ajax({
-        url: " http://0.0.0.0:8017/autocomplete_artist",
+        url: " http://5.75.182.107:8017/autocomplete_artist",
         dataType: "json",
         data: {
           term: request.term
