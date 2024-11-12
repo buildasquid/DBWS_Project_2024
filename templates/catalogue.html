@@ -90,7 +90,7 @@
 $( "#autocomplete_vinyl" ).autocomplete({
     source: function( request, response ) {
     $.ajax({
-        url: "http://0.0.0.0:8017/autocomplete_vinyl",  // Replace with your server URL
+        url: "http://0.0.0.0:8017/autocomplete_vinyl",  
         dataType: "json",
         data: {
         term: request.term
