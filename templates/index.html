@@ -2,15 +2,9 @@
 <html lang="en">
 <head>
 
-<!-- Leaflet CSS -->
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-
-
-<!-- Your Custom Stylesheet -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
 <meta charset="UTF-8">
@@ -20,7 +14,6 @@
 </head>
 <body>
 
-<!-- Existing Navbar and Content -->
 <div class="navbar-container">
     <div class="navbar">
         <div class="logo_pic">
@@ -34,9 +27,6 @@
                 <a class="nav-link" href="{{ url_for('catalogue') }}">CATALOGUE</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">ACCOUNT</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('login') }}">MANAGEMENT</a>
             </li>
             <li class="nav-item">
@@ -46,7 +36,7 @@
     </div>
 </div>
 
-<!-- Description Section -->
+
 <div class="container_description">
     <div class="paragraph_hero">
         <p style="font-size: 60px">Discover The Magic of <br> Vinyl Records</p>
@@ -57,7 +47,7 @@
     </div>
 </div>
 
-<!-- Catalogue Section -->
+
 <div class="flex-container">
     <div class="container_browse_catalogue">
         <p class="small_red_text">CATALOGUE</p>
@@ -67,7 +57,7 @@
             <p>Whether you're a seasoned collector or a casual listener, you'll find something special to add to your collection.</p>
         </div>
         <div class="button-become_a_member">
-            <a href="#" class="hero_buttons">BROWSE VINYLS</a>
+            <a href="catalogue.html" class="hero_buttons">BROWSE VINYLS</a>
         </div>
     </div>
 
@@ -77,7 +67,7 @@
 
 </div>
 
-<!-- Membership Section -->
+
 <div class="flex-container_memb">
     <div class="prices_pic">
         <img src="{{ url_for('static', filename='prices.png') }}" alt="prices pic">
@@ -96,42 +86,42 @@
     </div>
 </div>
 
-<!-- Map Section (Added) -->
+
 <div class="flex-container_memb">
 <div id="map" style="height: 400px; width: 100%; margin-top: 50px;"></div>
 
 <script>
-var map = L.map('map').setView([40.7128, -74.0060], 13); // Default to New York
+var map = L.map('map').setView([40.7128, -74.0060], 13); // set a default for the map to test it
 
-// Add OpenStreetMap tile layer to the map
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 
-// Request location data from the Flask server
+
 fetch('/get_location')
   .then(response => response.json())
   .then(data => {
-    // Check if the location data was successfully received
+
     if (data.loc) {
       const location = data.loc.split(',');
       const latitude = parseFloat(location[0]);
       const longitude = parseFloat(location[1]);
 
-      // Log and update the map with the user's location
-      console.log(`User location: ${latitude}, ${longitude}`);
-      map.setView([latitude, longitude], 13);  // Re-center map
 
-      // Add a marker at the user's location
+      console.log(`User location: ${latitude}, ${longitude}`);
+      map.setView([latitude, longitude], 13); 
+
+
       const marker = L.marker([latitude, longitude]).addTo(map);
       marker.bindPopup(`<b>Your IP Address:</b><br>${data.ip}`).openPopup();
     } else {
-      console.error('Location data is missing');
+      console.error('loc data is missing');
     }
   })
   .catch(error => {
-    console.error('Error fetching location:', error);
+    console.error('error fetching location:', error);
   });
 
 
