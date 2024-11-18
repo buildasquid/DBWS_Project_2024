@@ -109,37 +109,31 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-// Fetch user IP from ipinfo.io
-fetch('https://ipinfo.io?token=0f9e41f0e05613')
+// Request location data from the Flask server
+fetch('/get_location')
   .then(response => response.json())
   .then(data => {
-    // Get the user's IP address
-    const userIp = data.ip;
-    
-    // Now, send the user's IP to the Flask server to get the location
-    fetch(`/get_location?ip=${userIp}`)
-      .then(response => response.json())
-      .then(locationData => {
-        if (locationData.loc) {
-          // Parse the location data
-          const location = locationData.loc.split(',');
-          const latitude = parseFloat(location[0]);
-          const longitude = parseFloat(location[1]);
+    // Check if the location data was successfully received
+    if (data.loc) {
+      const location = data.loc.split(',');
+      const latitude = parseFloat(location[0]);
+      const longitude = parseFloat(location[1]);
 
-          // Log and update the map with the user's location
-          console.log(`User location: ${latitude}, ${longitude}`);
-          map.setView([latitude, longitude], 13);  // Re-center map
+      // Log and update the map with the user's location
+      console.log(`User location: ${latitude}, ${longitude}`);
+      map.setView([latitude, longitude], 13);  // Re-center map
 
-          // Add a marker at the user's location
-          const marker = L.marker([latitude, longitude]).addTo(map);
-          marker.bindPopup(`<b>Your IP Address:</b><br>${userIp}`).openPopup();
-        } else {
-          console.error('Location data is missing');
-        }
-      })
-      .catch(error => console.error('Error fetching location:', error));
+      // Add a marker at the user's location
+      const marker = L.marker([latitude, longitude]).addTo(map);
+      marker.bindPopup(`<b>Your IP Address:</b><br>${data.ip}`).openPopup();
+    } else {
+      console.error('Location data is missing');
+    }
   })
-  .catch(error => console.error('Error fetching IP:', error));
+  .catch(error => {
+    console.error('Error fetching location:', error);
+  });
+
 
 
 </script>
