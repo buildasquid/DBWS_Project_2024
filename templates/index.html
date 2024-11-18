@@ -109,29 +109,35 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Fetch location information from ipinfo.io (client-side)
-fetch('https://ipinfo.io?token=0f9e41f0e05613')
-    .then(response => response.json())
-    .then(data => {
-        // Get the latitude and longitude from the IP information
-        var location = data.loc.split(',');
-        var latitude = parseFloat(location[0]);
-        var longitude = parseFloat(location[1]);
+// Fetch location from your Flask backend
+fetch('/get_location')
+  .then(response => response.json())
+  .then(data => {
+    if (data.loc) {
+      // Get latitude and longitude from the location string
+      var location = data.loc.split(',');
+      var latitude = parseFloat(location[0]);
+      var longitude = parseFloat(location[1]);
 
-        // Log the location to verify it's correct
-        console.log(`User location: ${latitude}, ${longitude}`);
+      // Log the user's location
+      console.log(`User location: ${latitude}, ${longitude}`);
 
-        // Update the map view to the user's location
-        map.setView([latitude, longitude], 13);  // Re-center the map at the user's coordinates
+      // Update the map view to the user's location
+      map.setView([latitude, longitude], 13);
 
-        // Add a marker at the user's location
-        var marker = L.marker([latitude, longitude]).addTo(map);
+      // Add a marker at the user's location
+      var marker = L.marker([latitude, longitude]).addTo(map);
 
-        // Add a popup to the marker showing the IP address
-        marker.bindPopup(`<b>Your IP Address:</b><br>${data.ip}`).openPopup();
-    })
-    .catch(error => {
-        console.error('Error fetching IP info:', error);
-    });
+      // Add a popup to the marker showing the IP address
+      marker.bindPopup(`<b>Your IP Address:</b><br>${data.ip}`).openPopup();
+    } else {
+      console.error('Location data is missing');
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching location:', error);
+  });
+
 </script>
 </div>
 
