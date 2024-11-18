@@ -108,35 +108,39 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-// Fetch location information from ipinfo.io (client-side)
-// Fetch location from your Flask backend
-fetch('/get_location')
+
+// Fetch user IP from ipinfo.io
+fetch('https://ipinfo.io?token=0f9e41f0e05613')
   .then(response => response.json())
   .then(data => {
-    if (data.loc) {
-      // Get latitude and longitude from the location string
-      var location = data.loc.split(',');
-      var latitude = parseFloat(location[0]);
-      var longitude = parseFloat(location[1]);
+    // Get the user's IP address
+    const userIp = data.ip;
+    
+    // Now, send the user's IP to the Flask server to get the location
+    fetch(`/get_location?ip=${userIp}`)
+      .then(response => response.json())
+      .then(locationData => {
+        if (locationData.loc) {
+          // Parse the location data
+          const location = locationData.loc.split(',');
+          const latitude = parseFloat(location[0]);
+          const longitude = parseFloat(location[1]);
 
-      // Log the user's location
-      console.log(`User location: ${latitude}, ${longitude}`);
+          // Log and update the map with the user's location
+          console.log(`User location: ${latitude}, ${longitude}`);
+          map.setView([latitude, longitude], 13);  // Re-center map
 
-      // Update the map view to the user's location
-      map.setView([latitude, longitude], 13);
-
-      // Add a marker at the user's location
-      var marker = L.marker([latitude, longitude]).addTo(map);
-
-      // Add a popup to the marker showing the IP address
-      marker.bindPopup(`<b>Your IP Address:</b><br>${data.ip}`).openPopup();
-    } else {
-      console.error('Location data is missing');
-    }
+          // Add a marker at the user's location
+          const marker = L.marker([latitude, longitude]).addTo(map);
+          marker.bindPopup(`<b>Your IP Address:</b><br>${userIp}`).openPopup();
+        } else {
+          console.error('Location data is missing');
+        }
+      })
+      .catch(error => console.error('Error fetching location:', error));
   })
-  .catch(error => {
-    console.error('Error fetching location:', error);
-  });
+  .catch(error => console.error('Error fetching IP:', error));
+
 
 </script>
 </div>
