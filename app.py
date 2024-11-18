@@ -8,22 +8,15 @@ app.secret_key = 'your_secret_key'
 
 CORS(app)
 
-
+#getting user location and sending it back to frontend
 @app.route('/get_location', methods=['GET'])
 def get_location():
-    # Get the IP address of the user from the request headers
-    user_ip = request.remote_addr  # This gives the IP of the client making the request
-
-    # If running behind a proxy or in development, you might want to get the real IP like this:
-    # user_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
-    
-    # Send the request to ipinfo.io to get location info
+    user_ip = request.remote_addr  
     ipinfo_url = f'https://ipinfo.io/{user_ip}/json?token=0f9e41f0e05613'
     response = requests.get(ipinfo_url)
 
     if response.status_code == 200:
         data = response.json()
-        # Send location data to frontend
         return jsonify(data)
     else:
         return jsonify({'error': 'Unable to fetch location data'}), 500
