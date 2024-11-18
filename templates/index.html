@@ -1,98 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home</title>
-  
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- IP Geolocation API (ipinfo.io) -->
+<script src="https://ipinfo.io?token=YOUR_TOKEN_HERE"></script>
+
+<!-- Your Custom Stylesheet -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home</title>
+
 </head>
 <body>
 
-
-
-  <div class="navbar-container">
+<!-- Existing Navbar and Content -->
+<div class="navbar-container">
     <div class="navbar">
-      <div class="logo_pic">
-        <img src="{{ url_for('static', filename='LOGO.png') }}" alt="Logo pic">
-      </div>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <li><a  class="nav-link" href="{{ url_for('index') }}">HOME</a></li>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('catalogue') }}">CATALOGUE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">ACCOUNT</a>
-        </li>
-        <li class="nav-item">
-          <a  class="nav-link" href="{{ url_for('login') }}">MANAGEMENT</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('imprint') }}">IMPRINT</a>
-        </li>
-      </ul>
+        <div class="logo_pic">
+            <img src="{{ url_for('static', filename='LOGO.png') }}" alt="Logo pic">
+        </div>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <li><a class="nav-link" href="{{ url_for('index') }}">HOME</a></li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('catalogue') }}">CATALOGUE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">ACCOUNT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">MANAGEMENT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('imprint') }}">IMPRINT</a>
+            </li>
+        </ul>
     </div>
-  </div>
-  
+</div>
 
-
-  <div class="container_description">
-    <div class = "paragraph_hero">
-      <p style="font-size: 60px">Discover The Magic of <br> Vinyl Records</p>
-      <p>Explore Timeless Classics And Modern Hits.<br>Join Our Exclusive Membership For Unbeatable Discounts On Every Spin.</p>
-    </div>
-    <div class="button-become_a_member">
-      <a href="#" class="hero_buttons">BECOME A MEMBER</a>
-    </div>
-  </div>
-
-
-
-<div class = "flex-container">
-  <div class="container_browse_catalogue">
-    <p class = "small_red_text">CATALOGUE</p>
-    <h1>Browse Our Extensive Catalogue</h1>
-    <div class = "paragraph_hero">
-      <p>Dive int our carefully curated catalogue of vinyl records, spanning a wide array of genres to suit every musical taste.</p>
-      <p>Whether you're a seasoned collector or a casual listener, you'll find something special to add to your collection.</p>
+<!-- Description Section -->
+<div class="container_description">
+    <div class="paragraph_hero">
+        <p style="font-size: 60px">Discover The Magic of <br> Vinyl Records</p>
+        <p>Explore Timeless Classics And Modern Hits.<br>Join Our Exclusive Membership For Unbeatable Discounts On Every Spin.</p>
     </div>
     <div class="button-become_a_member">
-      <a href="#" class="hero_buttons">BROWSE VINYLS</a>
+        <a href="#" class="hero_buttons">BECOME A MEMBER</a>
     </div>
-  </div>
+</div>
 
-  <div class = "vinyl_pic">
-    <img src="{{ url_for('static', filename='vinyls.png') }}" alt="three vinyls">
-  </div>
+<!-- Catalogue Section -->
+<div class="flex-container">
+    <div class="container_browse_catalogue">
+        <p class="small_red_text">CATALOGUE</p>
+        <h1>Browse Our Extensive Catalogue</h1>
+        <div class="paragraph_hero">
+            <p>Dive into our carefully curated catalogue of vinyl records, spanning a wide array of genres to suit every musical taste.</p>
+            <p>Whether you're a seasoned collector or a casual listener, you'll find something special to add to your collection.</p>
+        </div>
+        <div class="button-become_a_member">
+            <a href="#" class="hero_buttons">BROWSE VINYLS</a>
+        </div>
+    </div>
+
+    <div class="vinyl_pic">
+        <img src="{{ url_for('static', filename='vinyls.png') }}" alt="three vinyls">
+    </div>
 
 </div>
 
-
-
-<div class ="flex-container_memb">
-    <div class = "prices_pic">
-      <img src="{{ url_for('static', filename='prices.png') }}" alt="prices pic">
+<!-- Membership Section -->
+<div class="flex-container_memb">
+    <div class="prices_pic">
+        <img src="{{ url_for('static', filename='prices.png') }}" alt="prices pic">
     </div>
 
-
-
-  <div class="container_become_member">
-    <p class = "small_red_text">MEMBERSHIPS</p>
-    <h1>Become A Member</h1>
-    <div class = "paragraph_hero">
-      <p>We offer two membership plans designed to meet the needs of every vinyl lover.</p>
-      <p>Our Premium Membership provides excellent discounts on all vinyl purchases, while the VIP Membership takes it a step further with even bigger savings.</p>
+    <div class="container_become_member">
+        <p class="small_red_text">MEMBERSHIPS</p>
+        <h1>Become A Member</h1>
+        <div class="paragraph_hero">
+            <p>We offer two membership plans designed to meet the needs of every vinyl lover.</p>
+            <p>Our Premium Membership provides excellent discounts on all vinyl purchases, while the VIP Membership takes it a step further with even bigger savings.</p>
+        </div>
+        <div class="button-become_a_member">
+            <a href="#" class="hero_buttons">BECOME A MEMBER</a>
+        </div>
     </div>
-    <div class="button-become_a_member">
-      <a href="#" class="hero_buttons">BECOME A MEMBER</a>
-    </div>
-  </div>
 </div>
 
+<!-- Map Section (Added) -->
+<div id="map" style="height: 400px; width: 100%; margin-top: 50px;"></div>
+
+<script>
+    // Initialize the map and set its view to a default location (e.g., New York)
+    var map = L.map('map').setView([40.7128, -74.0060], 13); // Coordinates for New York City
+
+    // Add OpenStreetMap tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Use ipinfo.io to get the user's IP-based location
+    fetch('https://ipinfo.io?token=0f9e41f0e05613')
+        .then(response => response.json())
+        .then(data => {
+            // Get the latitude and longitude from the IP information
+            var location = data.loc.split(',');
+            var latitude = parseFloat(location[0]);
+            var longitude = parseFloat(location[1]);
+
+            // Set the map view to the user's location
+            map.setView([latitude, longitude], 13);
+
+            // Add a marker at the user's location
+            var marker = L.marker([latitude, longitude]).addTo(map);
+
+            // Add a callout to display the IP address next to the marker
+            marker.bindPopup("<b>Your IP Address:</b><br>" + data.ip).openPopup();
+        })
+        .catch(error => {
+            console.error('Error fetching IP info:', error);
+        });
+</script>
 
 </body>
 </html>
-
