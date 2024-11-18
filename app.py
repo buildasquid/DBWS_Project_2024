@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 import mysql.connector
 from flask_cors import CORS
+import requests
 
 app = Flask(__name__, template_folder='templates')  
 app.secret_key = 'your_secret_key'  
