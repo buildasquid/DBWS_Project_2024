@@ -7,6 +7,19 @@ app.secret_key = 'your_secret_key'
 
 CORS(app)
 
+
+@app.route('/get_location')
+def get_location():
+    # Make a request to ipinfo.io to fetch the user's location
+    response = requests.get('https://ipinfo.io?token=0f9e41f0e05613')
+    
+    # If the request is successful, return the data
+    if response.status_code == 200:
+        data = response.json()
+        return jsonify(data)
+    else:
+        return jsonify({'error': 'Unable to fetch location data'}), 500
+
 def get_db_connection():
     return mysql.connector.connect(
         host='localhost',  
