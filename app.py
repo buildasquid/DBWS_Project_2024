@@ -9,11 +9,6 @@ app.secret_key = 'your_secret_key'
 CORS(app)
 
 
-import requests
-from flask import Flask, jsonify, request
-
-app = Flask(__name__)
-
 @app.route('/get_location', methods=['GET'])
 def get_location():
     # Get the IP address of the user from the request headers
@@ -32,9 +27,6 @@ def get_location():
         return jsonify(data)
     else:
         return jsonify({'error': 'Unable to fetch location data'}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 
 def get_db_connection():
