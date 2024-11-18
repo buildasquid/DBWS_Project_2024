@@ -11,8 +11,14 @@ CORS(app)
 
 @app.route('/get_location')
 def get_location():
-    # Make a request to ipinfo.io to fetch the user's location
-    response = requests.get('https://ipinfo.io?token=0f9e41f0e05613')
+    # Get the IP address from the request query string
+    user_ip = request.args.get('ip')
+    
+    if not user_ip:
+        return jsonify({'error': 'IP address not provided'}), 400
+    
+    # Fetch location data for the user's IP from ipinfo.io
+    response = requests.get(f'https://ipinfo.io/{user_ip}/json?token=0f9e41f0e05613')
     
     # If the request is successful, return the data
     if response.status_code == 200:
